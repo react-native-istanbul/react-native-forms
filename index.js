@@ -1,11 +1,11 @@
 import Input from './src/Input'
-import Picker from './src/Picker'
+import PickerList from './src/PickerList'
 import ModalList from './src/ModalList'
 import Switch from './src/Switch'
 
 export {
     Input,
-    Picker,
+    PickerList,
     ModalList,
     Switch
 }
