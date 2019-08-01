@@ -46,7 +46,7 @@ export default class ModalList extends React.Component {
                             </Right>
                         </Header>
                         <ScrollView>
-                            <List style={{ top: 20 }}>
+                            <List>
                                 {
                                     data ?
                                         data.map((item) => {
@@ -62,7 +62,7 @@ export default class ModalList extends React.Component {
                                                         <Text>{item.key}</Text>
                                                     </Left>
                                                     <Right>
-                                                        <Icon name="arrow-forward" />
+                                                        <Icon name="md-checkmark" />
                                                     </Right>
                                                 </ListItem>
                                             )
