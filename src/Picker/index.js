@@ -9,7 +9,7 @@ export default class ItemPicker extends Component {
     }
 
     render() {
-        const { type, headerTitle, value, iosBarStyle, onChange, showModal, data, label } = this.props
+        const { type, headerTitle, value, iosBarStyle, onChange, data, label } = this.props
         return (
             <React.Fragment>
                 <ModalList
@@ -19,7 +19,7 @@ export default class ItemPicker extends Component {
                     iosBarStyle={iosBarStyle}
                     valueText={(selectedItemText) => { this.setState({ seletedItemText: selectedItemText }) }}
                     onPress={onChange}
-                    show={showModal}
+                    show={this.state.showModal}
                     data={data}
                     close={() => { this.setState({ showModal: false }) }}
                 />

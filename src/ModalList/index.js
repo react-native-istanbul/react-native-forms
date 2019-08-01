@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, Modal } from 'react-native'
+import { Text, View, Modal, ScrollView } from 'react-native'
 import { Header, Left, Right, Body, Title, Button, List, ListItem, Icon } from 'native-base'
 
 export default class ModalList extends React.Component {
@@ -45,7 +45,7 @@ export default class ModalList extends React.Component {
                                 </Button>
                             </Right>
                         </Header>
-                        <View >
+                        <ScrollView>
                             <List style={{ top: 20 }}>
                                 {
                                     data ?
@@ -69,7 +69,7 @@ export default class ModalList extends React.Component {
                                         }) : null
                                 }
                             </List>
-                        </View>
+                        </ScrollView>
                     </Modal>
                 </View>
             )
