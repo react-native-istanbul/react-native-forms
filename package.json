@@ -1,7 +1,7 @@
 {
-  "name": "forms",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@react-native-istanbul/forms",
+  "version": "0.0.1",
+  "description": "react-native-istanbul",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,13 +10,31 @@
     "type": "git",
     "url": "git+https://github.com/react-native-istanbul/forms.git"
   },
+  "keywords": [
+    "android",
+    "ios",
+    "react",
+    "native",
+    "react-native",
+    "native-modules",
+    "form",
+    "istanbul",
+    "react-native-istanbul"
+ ],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/react-native-istanbul/forms/issues"
   },
   "homepage": "https://github.com/react-native-istanbul/forms#readme",
-  "dependencies": {
+  "devDependencies": {
+    "native-base": "^2.13.4",
+    "react": "^15.5.0",
+    "react-native": "0.41.1"
+ },
+ "peerDependencies": {
+    "react-native": ">=0.41.1",
+    "react": ">=15.5.0",
     "native-base": "^2.13.4"
-  }
+ }
 }
