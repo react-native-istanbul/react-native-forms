@@ -1,9 +1,9 @@
 import { Item, Input as InputNativeBae } from 'native-base'
 import React from 'react'
 
-export default function Input({ placeholder, value, keyboardType, onChangeText, clearButtonMode, style }) {
+export default function Input({ placeholder, success, error, value, keyboardType, onChangeText, clearButtonMode, style }) {
     return (
-        <Item style={{ marginLeft: 10 }}>
+        <Item success={success} error={error} style={{ marginLeft: 10 }}>
             <InputNativeBae
                 placeholder={placeholder}
                 keyboardType={keyboardType}
