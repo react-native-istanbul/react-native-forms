@@ -1,6 +1,6 @@
 import React from 'react'
-import { Text, View, Modal, ScrollView } from 'react-native'
-import { Header, Left, Right, Body, Title, Button, List, ListItem, Icon } from 'native-base'
+import { Text, View, Modal, FlatList } from 'react-native'
+import { Header, Left, Right, Body, Title, Button, ListItem, Icon } from 'native-base'
 
 export default class ModalList extends React.Component {
 
@@ -45,33 +45,28 @@ export default class ModalList extends React.Component {
                                 </Button>
                             </Right>
                         </Header>
-                        <ScrollView>
-                            <List>
-                                {
-                                    data ?
-                                        data.map((item) => {
-                                            return (
-                                                <ListItem selected={item.value == value}
-                                                    key={item.value}
-                                                    onPress={() => {
-                                                        onPress(item.value)
-                                                        close(false)
-                                                        valueText(item.key)
-                                                    }}>
-                                                    <Left>
-                                                        <Text>{item.key}</Text>
-                                                    </Left>
-                                                    <Right>
-                                                        <Icon name="md-checkmark" />
-                                                    </Right>
-                                                </ListItem>
-                                            )
-                                        }) : null
-                                }
-                            </List>
-                        </ScrollView>
+
+                        <FlatList
+                            data={data}
+                            renderItem={({ item }) => (
+                                <ListItem selected={item.value == value}
+                                    key={item.value}
+                                    onPress={() => {
+                                        onPress(item.value)
+                                        close(false)
+                                        valueText(item.key)
+                                    }}>
+                                    <Left>
+                                        <Text>{item.key}</Text>
+                                    </Left>
+                                    <Right>
+                                        <Icon name="md-checkmark" />
+                                    </Right>
+                                </ListItem>
+                            )}
+                        />
                     </Modal>
-                </View>
+                </View >
             )
         return null
     }
