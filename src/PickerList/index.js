@@ -9,13 +9,14 @@ export default class PickerList extends Component {
     }
 
     render() {
-        const { type, headerTitle, value, separatorTitle, iosBarStyle, onChange, data, label } = this.props
+        const { type, headerTitle, value, headerbackgroundColor, separatorTitle, iosBarStyle, onChange, data, label } = this.props
         return (
             <React.Fragment>
                 <ModalList
                     type={type}
                     headerTitle={headerTitle}
                     value={value}
+                    headerbackgroundColor={headerbackgroundColor}
                     iosBarStyle={iosBarStyle}
                     valueText={(selectedItemText) => { this.setState({ seletedItemText: selectedItemText }) }}
                     onPress={onChange}

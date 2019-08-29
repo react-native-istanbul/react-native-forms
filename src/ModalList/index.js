@@ -13,7 +13,7 @@ export default class ModalList extends React.Component {
     }
 
     render() {
-        const { show, headerTitle, data, onPress, iosBarStyle, close, value, valueText, type = 'default' } = this.props;
+        const { show, headerTitle, data, onPress, iosBarStyle, close, headerbackgroundColor, value, valueText, type = 'default' } = this.props;
         if (type == 'default')
             return (
                 <View>
@@ -24,7 +24,7 @@ export default class ModalList extends React.Component {
                         onRequestClose={() => {
                             console.log('close')
                         }}>
-                        <Header iosBarStyle={iosBarStyle} style={{ backgroundColor: '#1595AE', }}>
+                        <Header iosBarStyle={iosBarStyle} style={{ backgroundColor: headerbackgroundColor, }}>
                             <Left>
                                 <Button transparent style={{ width: 60 }}
                                     onPress={() => {
