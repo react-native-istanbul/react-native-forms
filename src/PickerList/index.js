@@ -9,12 +9,13 @@ export default class PickerList extends Component {
     }
 
     render() {
-        const { type, headerTitle, value, headerbackgroundColor, separatorTitle, iosBarStyle, onChange, data, label } = this.props
+        const { type, headerTitle, value, androidStatusBarColor, headerbackgroundColor, separatorTitle, iosBarStyle, onChange, data, label } = this.props
         return (
             <React.Fragment>
                 <ModalList
                     type={type}
                     headerTitle={headerTitle}
+                    androidStatusBarColor={androidStatusBarColor}
                     value={value}
                     headerbackgroundColor={headerbackgroundColor}
                     iosBarStyle={iosBarStyle}
