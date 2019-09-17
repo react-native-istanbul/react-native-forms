@@ -26,7 +26,7 @@ export default class ModalList extends React.Component {
                         }}>
                         <Header androidStatusBarColor={androidStatusBarColor} iosBarStyle={iosBarStyle} style={{ backgroundColor: headerbackgroundColor, }}>
                             <Left>
-                                <Button transparent style={{ width: 60 }}
+                                <Button transparent
                                     onPress={() => {
                                         close(false)
                                     }}
@@ -36,8 +36,8 @@ export default class ModalList extends React.Component {
                                     />
                                 </Button>
                             </Left>
-                            <Body style={{ width: 200 }}>
-                                <Title style={{ width: 200, color: 'white' }}>{headerTitle}</Title>
+                            <Body>
+                                <Title style={{ color: 'white' }}>{headerTitle}</Title>
                             </Body>
                             <Right>
                                 <Button transparent>

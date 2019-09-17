@@ -42,7 +42,7 @@ export default class Picker extends React.PureComponent {
         this.setState({ selectedITem: item })
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.setState({ selectedITem: this.props.value })
     }
 
