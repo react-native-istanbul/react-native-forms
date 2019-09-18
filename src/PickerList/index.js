@@ -8,6 +8,15 @@ export default class PickerList extends Component {
         seletedItemText: ''
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.value != nextProps.value) {
+            this.props.onChange(nextProps.value)
+            if (nextProps.value == '')
+                this.setState({ seletedItemText: '' })
+        }
+        return true
+    }
+
     render() {
         const { type, headerTitle, value, androidStatusBarColor, headerbackgroundColor, separatorTitle, iosBarStyle, onChange, data, label } = this.props
         return (
