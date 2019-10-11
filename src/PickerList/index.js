@@ -36,8 +36,8 @@ export default class PickerList extends Component {
                 />
                 {
                     separatorTitle &&
-                    <Separator bordered>
-                        <Text style={{ fontSize: 13 }}>{label}</Text>
+                    <Separator>
+                        <Text>{label}</Text>
                     </Separator>
                 }
                 <ListItem icon onPress={() => { this.setState({ showModal: true }) }}>
