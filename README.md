@@ -3,6 +3,6 @@
 
 Install
 ```
-$ npm i @react-native-istanbul/forms
+$ yarn add @react-native-istanbul/forms
 
 ``` 

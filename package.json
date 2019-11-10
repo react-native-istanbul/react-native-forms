@@ -27,14 +27,11 @@
     "url": "https://github.com/react-native-istanbul/forms/issues"
   },
   "homepage": "https://github.com/react-native-istanbul/forms#readme",
-  "devDependencies": {
-    "native-base": "^2.13.4",
-    "react": "^15.5.0",
-    "react-native": "0.41.1"
+  "dependencies": {
+    "native-base": "^2.13.8",
+    "react-native-vector-icons" : "^6.6.0"
  },
  "peerDependencies": {
-    "react-native": ">=0.41.1",
-    "react": ">=15.5.0",
-    "native-base": "^2.13.4"
+    "react": ">=15.5.0"
  }
 }
