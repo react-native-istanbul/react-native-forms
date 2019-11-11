@@ -1,8 +1,11 @@
 {
   "name": "@react-native-istanbul/forms",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "react-native-istanbul",
   "main": "index.js",
+  "files": [
+    "/src"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
