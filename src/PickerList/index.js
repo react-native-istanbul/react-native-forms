@@ -8,13 +8,21 @@ export default class PickerList extends Component {
         seletedItemText: ''
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.props.value != nextProps.value) {
-            this.props.onChange(nextProps.value)
-            if (nextProps.value == '')
-                this.setState({ seletedItemText: '' })
-        }
-        return true
+    updateValue(value) {
+        const { data } = this.props
+        const item = data.find(x => x.value == value)
+        this.setState({ seletedItemText: item.key })
+    }
+
+    componentDidMount() {
+        const { data, value } = this.props
+        if (data)
+            this.updateValue(value)
+    }
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (nextProps.value != this.props.value)
+            this.updateValue(nextProps.value)
     }
 
     render() {

@@ -1,45 +1,58 @@
 import React from 'react'
-import { View, Modal, PickerIOS, Button, Platform, PickerItem } from 'react-native'
+import { View, NativeModules, Modal, Picker as RnPicker, Button as RnButton, Platform } from 'react-native'
 import styles from './styles'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
+import { Button, ListItem, Text, Icon, Left, Body, Right } from 'native-base';
 
-export default class Picker extends React.PureComponent {
+export const NativePicker = ({ data, value, pickerRef, onValueChange, onCancel, label }) => {
+    pickerRef({
+        show: () => {
+            NativeModules.ReactNativePickerModule.show(
+                data,
+                value,
+                label,
+                onValueChange,
+                onCancel
+            )
+        }
+    });
+    return <View style={{ display: 'none' }} />
+}
+
+export default class Picker extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
             selectedITem: '',
-            visible: false
+            show: false,
+            selected: ''
         }
+        this.picker;
     }
 
     static defaultProps = {
         doneTitleIOS: 'Done',
         modalAnimationIOS: true,
+        visible: false,
         value: ''
     };
 
     doneOnPress = () => {
-        if (Platform.OS === 'ios') {
-            this.setState({ visible: false })
-            this.props.onChange(this.state.selectedITem)
-        }
+        const { data } = this.props;
+        selectedItem = data.find(x => x.value == this.state.selectedITem);
+        this.props.onValueChange(this.state.selectedITem)
+        this.setState({ show: false, seletedItemText: selectedItem.key })
     }
 
     closeModal = () => {
-        if (Platform.OS === 'ios') {
-            this.setState({ visible: false })
-        }
-    }
-
-    show() {
-        if (Platform.OS === 'ios') {
-            this.setState({ visible: true })
-        }
+        this.setState({ show: false })
     }
 
     onItemChange = (item) => {
-        this.setState({ selectedITem: item })
+        const { data } = this.props;
+        selectedItem = data.find(x => x.value == item);
+        this.setState({ selected: item, selectedITem: item })
     }
 
     UNSAFE_componentWillMount() {
@@ -47,54 +60,124 @@ export default class Picker extends React.PureComponent {
     }
 
     componentDidMount() {
-        this.props.onChange(this.props.value)
+        const { data, value } = this.props;
+        if (data) {
+            selectedItem = data.find(x => x.value == value);
+            this.setState({ seletedItemText: selectedItem.key })
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return Platform.OS === 'ios'
+        const { data } = this.props;
+        if (nextProps.value != this.props.value) {
+            selectedItem = data.find(x => x.value == nextProps.value);
+            this.setState({ seletedItemText: selectedItem.key })
+        }
+        return true;
+    }
+
+    getData() {
+        let obj = [];
+        this.props.data.forEach(element => { obj.push(element.key); });
+        return obj;
+    }
+
+    getValue(data, index) {
+        return data[index].value
+    }
+
+    show() {
+        const { value } = this.props;
+        this.setState({ show: true, selectedITem: value })
+        if (Platform.OS === 'android')
+            this.picker.show();
+    }
+
+    renderPicker = () => {
+        const { data } = this.props;
+        const { selectedITem } = this.state;
+        return (
+            <RnPicker
+                selectedValue={selectedITem}
+                onValueChange={(item) => this.onItemChange((item))}
+            >
+                {
+                    data &&
+                    data.map((item) => (
+                        <RnPicker.Item
+                            label={item.key}
+                            value={item.value}
+                            key={item.key}
+                        />
+                    ))
+                }
+            </RnPicker>
+        )
     }
 
     render() {
-        const { doneTitleIOS, modalAnimationIOS, cancelTitleIOS, data } = this.props;
-        const { selectedITem, visible } = this.state;
-
+        const { doneTitleIOS, modalAnimationIOS, label, data, cancelTitleIOS, onValueChange } = this.props;
+        const { show, seletedItemText } = this.state;
         return (
-            <Modal transparent={true} visible={visible} animated={modalAnimationIOS}>
-                <View onTouchStart={this.closeModal} style={styles.modalStart}>
-                </View>
-                <View>
-                    <View style={styles.modalBtnContainer}>
-                        <View style={styles.btnCancelContainer}>
-                            <Button onPress={this.closeModal} title={cancelTitleIOS}></Button>
-                        </View>
-                        <View style={styles.btnDoneContainer}>
-                            <Button onPress={this.doneOnPress} title={doneTitleIOS}></Button>
-                        </View>
-                    </View>
-                    <View style={styles.picker}>
-                        <PickerIOS
-                            selectedValue={selectedITem}
-                            onValueChange={(item) => this.onItemChange((item))}
-                        >
-                            {
-                                data.map(res => (
-                                    <PickerItem
-                                        key={res.key}
-                                        label={res.key}
-                                        value={res.value}
-                                    />
-                                ))
-                            }
-                        </PickerIOS>
-                    </View>
-                </View>
-            </Modal>
+            <React.Fragment>
+                <ListItem icon onPress={() => { this.show() }}>
+                    {
+                        <React.Fragment>
+                            <Left >
+                                <Button style={{ backgroundColor: "#007AFF", display: 'none' }}>
+                                    <Icon active name="wifi" />
+                                </Button>
+                            </Left>
+                            <Body style={{ marginLeft: -18 }}>
+                                <Text>{label}</Text>
+                            </Body>
+                            <Right>
+                                <Text>{seletedItemText}</Text>
+                                <Icon active name="arrow-forward" />
+                            </Right>
+                        </React.Fragment>
+                    }
+                </ListItem>
+                {
+                    Platform.OS === 'ios' ?
+                        <Modal transparent={true} visible={show} animated={modalAnimationIOS}>
+                            <View onTouchStart={this.closeModal} style={styles.modalStart}>
+                            </View>
+                            <View>
+                                <View style={styles.modalBtnContainer}>
+                                    <View style={styles.btnCancelContainer}>
+                                        <RnButton onPress={this.closeModal} title={cancelTitleIOS}></RnButton>
+                                    </View>
+                                    <View style={styles.btnDoneContainer}>
+                                        <RnButton onPress={this.doneOnPress} title={doneTitleIOS}></RnButton>
+                                    </View>
+                                </View>
+                                <View style={styles.picker}>
+                                    {this.renderPicker()}
+                                </View>
+                            </View>
+                        </Modal>
+                        : <NativePicker
+                            onCancel={() => { console.log('Cancelled') }}
+                            pickerRef={e => this.picker = e}
+                            value={0}
+                            data={this.getData()}
+                            label={label}
+                            onValueChange={(value, index) => {
+                                const val = this.getValue(data, index)
+                                this.setState({ seletedItemText: value, value: val })
+                                onValueChange(val)
+                            }}
+                        />
+                }
+            </React.Fragment>
         )
     }
 }
 
-Picker.propTypes = {
-    modalAnimationIOS: PropTypes.bool,
-    doneTitleIOS: PropTypes.string,
-    value: PropTypes.string
-}
+// Picker.propTypes = {
+//     modalAnimationIOS: PropTypes.bool,
+//     doneTitleIOS: PropTypes.string,
+//     visible: PropTypes.bool,
+//     value: PropTypes.string
+// }

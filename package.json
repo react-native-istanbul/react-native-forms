@@ -29,7 +29,8 @@
   "homepage": "https://github.com/react-native-istanbul/forms#readme",
   "dependencies": {
     "native-base": "^2.13.8",
-    "react-native-vector-icons" : "^6.6.0"
+    "react-native-vector-icons" : "^6.6.0",
+    "react-native-picker-module": "^1.2.0"
  },
  "peerDependencies": {
     "react": ">=15.5.0"

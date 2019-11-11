@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { SafeAreaView } from 'react-native'
-import { Input, Switch, PickerList } from '@react-native-istanbul/forms'
+import { Button } from 'react-native'
+import { Input, Switch, PickerList, Picker } from '@react-native-istanbul/forms'
 import { Container, Header, Title } from 'native-base'
 
 const cityItems = [
@@ -18,17 +18,39 @@ const cityItems = [
   }
 ]
 
+const genderItems = [
+  {
+    'key': 'Select Gender',
+    'value': ''
+  },
+  {
+    'key': 'Male',
+    'value': '1'
+  },
+  {
+    'key': 'Woman',
+    'value': '2'
+  }
+]
+
+const state = {
+  name: '',
+  saveProfile: false,
+  city: '',
+  gender : ''
+}
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: '',
-      saveProfile: false,
-      city: ''
-    }
+    this.state = state
   }
+
+  clearForm() {
+    this.setState(state);
+  }
+
   render() {
-    const { name, saveProfile, city } = this.state
+    const { name, saveProfile, city, gender } = this.state
     return (
       <>
         <Header>
@@ -57,6 +79,22 @@ export default class App extends Component {
             onChange={(val) => { this.setState({ city: val }) }}
             data={cityItems}
             label={'City'}
+          />
+
+          <Picker
+            label={'Gender'}
+            cancelTitleIOS={'Kapat'}
+            doneTitleIOS={'Done'}
+            onValueChange={(val) => {
+              this.setState({gender : val})
+            }}
+            value={gender}
+            data={genderItems}
+          />
+
+          <Button
+            title={'Clear Form'}
+            onPress={() => { this.clearForm() }}
           />
         </Container>
       </>
