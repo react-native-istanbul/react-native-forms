@@ -128,11 +128,11 @@ export default class Picker extends React.Component {
                                     <Icon active name="wifi" />
                                 </Button>
                             </Left>
-                            <Body style={{ marginLeft: -18 }}>
+                            <Body style={{ flex: 0.3, marginLeft: -18 }}>
                                 <Text>{label}</Text>
                             </Body>
-                            <Right>
-                                <Text>{seletedItemText}</Text>
+                            <Right style={{ flex: 0.7 }}>
+                                <Text numberOfLines={1}>{seletedItemText}</Text>
                                 <Icon active name="arrow-forward" />
                             </Right>
                         </React.Fragment>
