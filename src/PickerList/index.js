@@ -11,7 +11,12 @@ export default class PickerList extends Component {
     updateValue(value) {
         const { data } = this.props
         const item = data.find(x => x.value == value)
-        this.setState({ seletedItemText: item.key })
+        if(item){
+            this.setState({ seletedItemText: item.key })
+        }
+        else{
+            this.setState({ seletedItemText: '' })
+        }
     }
 
     componentDidMount() {
