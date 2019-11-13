@@ -76,10 +76,10 @@ export default class PickerList extends Component {
                                         <Icon active name="wifi" />
                                     </Button>
                                 </Left>
-                                <Body style={{ flex : 0.3,  marginLeft: -18 }}>
+                                <Body style={{ flex : 0.5,  marginLeft: -18 }}>
                                     <Text>{label}</Text>
                                 </Body>
-                                <Right style={{flex : 0.7}}>
+                                <Right style={{flex : 0.5}}>
                                     <Text numberOfLines={1}>{this.state.seletedItemText}</Text>
                                     <Icon active name="arrow-forward" />
                                 </Right>
