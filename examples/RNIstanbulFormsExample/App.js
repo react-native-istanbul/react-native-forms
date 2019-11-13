@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button } from 'react-native'
-import { Input, Switch, PickerList, Picker } from '@react-native-istanbul/forms'
+import { Input, Switch, PickerList, Picker, DateTimePicker } from '@react-native-istanbul/forms'
 import { Container, Header, Title, Content, Separator, Text } from 'native-base'
 
 const cityItems = [
@@ -53,8 +53,10 @@ const state = {
   saveProfile: false,
   city: '',
   car: '',
+  date: new Date(),
   gender: ''
 }
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -66,7 +68,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { name, saveProfile, city, gender, car } = this.state
+    const { name, saveProfile, city, gender, car, date } = this.state
     return (
       <>
         <Header>
@@ -115,13 +117,27 @@ export default class App extends Component {
 
             <Picker
               label={'Gender'}
-              cancelTitleIOS={'Kapat'}
+              cancelTitleIOS={'Close'}
               doneTitleIOS={'Done'}
               onValueChange={(val) => {
                 this.setState({ gender: val })
               }}
               value={gender}
               data={genderItems}
+            />
+
+            <DateTimePicker
+              label={'Date'}
+              cancelTitleIOS={'Close'}
+              doneTitleIOS={'Done'}
+              dateFormat={'DD.MM.YYYY'}
+              androidDisplay={'spinner'}
+              minimumDate={new Date('2000-06-12T14:42:42')}
+              maximumDate={new Date()}
+              onValueChange={(val) => {
+                this.setState({ date: val })
+              }}
+              value={date}
             />
 
             <Button
