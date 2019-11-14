@@ -62,8 +62,10 @@ export default class Picker extends React.Component {
     componentDidMount() {
         const { data, value } = this.props;
         if (data) {
-            selectedItem = data.find(x => x.value == value);
-            this.setState({ seletedItemText: selectedItem.key })
+            const selectedItem = data.find(x => x.value == value);
+            if (selectedItem) {
+                this.setState({ seletedItemText: selectedItem.key })
+            }
         }
     }
 
