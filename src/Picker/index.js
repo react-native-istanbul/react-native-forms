@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, NativeModules, Modal, Picker as RnPicker, Button as RnButton, Platform } from 'react-native'
-import styles from './styles'
-// import PropTypes from 'prop-types'
-import { Button, ListItem, Text, Icon, Left, Body, Right } from 'native-base';
+import { NativeModules, Picker as RnPicker, Platform } from 'react-native'
+import { theme } from './styles'
+import Modal from '../Modal'
+import { InputItemText } from '../InputItem'
+import PropTypes from 'prop-types'
 
 export const NativePicker = ({ data, value, pickerRef, onValueChange, onCancel, label }) => {
     pickerRef({
@@ -16,7 +17,7 @@ export const NativePicker = ({ data, value, pickerRef, onValueChange, onCancel, 
             )
         }
     });
-    return <View style={{ display: 'none' }} />
+    return null;
 }
 
 export default class Picker extends React.Component {
@@ -62,10 +63,8 @@ export default class Picker extends React.Component {
     componentDidMount() {
         const { data, value } = this.props;
         if (data) {
-            const selectedItem = data.find(x => x.value == value);
-            if (selectedItem) {
-                this.setState({ seletedItemText: selectedItem.key })
-            }
+            selectedItem = data.find(x => x.value == value);
+            this.setState({ seletedItemText: selectedItem.key })
         }
     }
 
@@ -95,11 +94,16 @@ export default class Picker extends React.Component {
             this.picker.show();
     }
 
+    getPropsToTheme() {
+        return this.props.darkMode ? 'dark' : 'light';
+    }
+
     renderPicker = () => {
         const { data } = this.props;
         const { selectedITem } = this.state;
         return (
             <RnPicker
+                itemStyle={theme[this.getPropsToTheme()].item}
                 selectedValue={selectedITem}
                 onValueChange={(item) => this.onItemChange((item))}
             >
@@ -118,46 +122,27 @@ export default class Picker extends React.Component {
     }
 
     render() {
-        const { doneTitleIOS, modalAnimationIOS, label, data, cancelTitleIOS, onValueChange } = this.props;
+        const { doneTitleIOS, darkMode, modalAnimationIOS, cancelTitleIOS, label, data, onValueChange } = this.props;
         const { show, seletedItemText } = this.state;
         return (
             <React.Fragment>
-                <ListItem icon onPress={() => { this.show() }}>
-                    {
-                        <React.Fragment>
-                            <Left >
-                                <Button style={{ backgroundColor: "#007AFF", display: 'none' }}>
-                                    <Icon active name="wifi" />
-                                </Button>
-                            </Left>
-                            <Body style={{ flex: 0.5, marginLeft: -18 }}>
-                                <Text>{label}</Text>
-                            </Body>
-                            <Right style={{ flex: 0.5 }}>
-                                <Text numberOfLines={1}>{seletedItemText}</Text>
-                                <Icon active name="arrow-forward" />
-                            </Right>
-                        </React.Fragment>
-                    }
-                </ListItem>
+                <InputItemText
+                    label={label}
+                    seletedItemText={seletedItemText}
+                    onPress={() => { this.show() }}
+                />
                 {
                     Platform.OS === 'ios' ?
-                        <Modal transparent={true} visible={show} animated={modalAnimationIOS}>
-                            <View onTouchStart={this.closeModal} style={styles.modalStart}>
-                            </View>
-                            <View>
-                                <View style={styles.modalBtnContainer}>
-                                    <View style={styles.btnCancelContainer}>
-                                        <RnButton onPress={this.closeModal} title={cancelTitleIOS}></RnButton>
-                                    </View>
-                                    <View style={styles.btnDoneContainer}>
-                                        <RnButton onPress={this.doneOnPress} title={doneTitleIOS}></RnButton>
-                                    </View>
-                                </View>
-                                <View style={styles.picker}>
-                                    {this.renderPicker()}
-                                </View>
-                            </View>
+                        <Modal
+                            doneTitleIOS={doneTitleIOS}
+                            modalAnimationIOS={modalAnimationIOS}
+                            cancelTitleIOS={cancelTitleIOS}
+                            show={show}
+                            doneOnPress={() => { this.doneOnPress() }}
+                            closeOnPress={() => { this.closeModal() }}
+                            darkMode={darkMode}
+                        >
+                            {this.renderPicker()}
                         </Modal>
                         : <NativePicker
                             onCancel={() => { console.log('Cancelled') }}
@@ -177,9 +162,9 @@ export default class Picker extends React.Component {
     }
 }
 
-// Picker.propTypes = {
-//     modalAnimationIOS: PropTypes.bool,
-//     doneTitleIOS: PropTypes.string,
-//     visible: PropTypes.bool,
-//     value: PropTypes.string
-// }
+Picker.propTypes = {
+    modalAnimationIOS: PropTypes.bool,
+    doneTitleIOS: PropTypes.string,
+    visible: PropTypes.bool,
+    value: PropTypes.string
+}

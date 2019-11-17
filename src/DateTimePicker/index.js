@@ -1,9 +1,10 @@
 import React from 'react'
-import { View, Modal, Button as RnButton, Platform } from 'react-native'
+import { Platform } from 'react-native'
 import styles from './styles'
-import { Button, ListItem, Text, Icon, Left, Body, Right } from 'native-base';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment'
+import Modal from '../Modal'
+import { InputItemText } from '../InputItem'
 
 export default class DateTimePicker extends React.Component {
 
@@ -84,46 +85,27 @@ export default class DateTimePicker extends React.Component {
     }
 
     render() {
-        const { doneTitleIOS, modalAnimationIOS, label, cancelTitleIOS, dateFormat } = this.props;
+        const { doneTitleIOS, modalAnimationIOS, label, cancelTitleIOS, dateFormat, darkMode } = this.props;
         const { show, seletedItemText } = this.state;
         return (
             <>
-                <ListItem icon onPress={() => { this.show() }}>
-                    {
-                        <React.Fragment>
-                            <Left >
-                                <Button style={{ backgroundColor: "#007AFF", display: 'none' }}>
-                                    <Icon active name="wifi" />
-                                </Button>
-                            </Left>
-                            <Body style={{ flex: 0.5, marginLeft: -18 }}>
-                                <Text>{label}</Text>
-                            </Body>
-                            <Right style={{ flex: 0.5 }}>
-                                <Text numberOfLines={1}>{seletedItemText}</Text>
-                                <Icon active name="arrow-forward" />
-                            </Right>
-                        </React.Fragment>
-                    }
-                </ListItem>
+                <InputItemText
+                    onPress={() => { this.show() }}
+                    label={label}
+                    seletedItemText={seletedItemText}
+                />
                 {
                     Platform.OS === 'ios' ?
-                        <Modal transparent={true} visible={show} animated={modalAnimationIOS}>
-                            <View onTouchStart={this.closeModal} style={styles.modalStart}>
-                            </View>
-                            <View>
-                                <View style={styles.modalBtnContainer}>
-                                    <View style={styles.btnCancelContainer}>
-                                        <RnButton onPress={this.closeModal} title={cancelTitleIOS}></RnButton>
-                                    </View>
-                                    <View style={styles.btnDoneContainer}>
-                                        <RnButton onPress={this.doneOnPress} title={doneTitleIOS}></RnButton>
-                                    </View>
-                                </View>
-                                <View style={styles.picker}>
-                                    {this.renderPicker()}
-                                </View>
-                            </View>
+                        <Modal
+                            doneTitleIOS={doneTitleIOS}
+                            modalAnimationIOS={modalAnimationIOS}
+                            cancelTitleIOS={cancelTitleIOS}
+                            show={show}
+                            doneOnPress={() => { this.doneOnPress() }}
+                            closeOnPress={() => { this.closeModal() }}
+                            darkMode={darkMode}
+                        >
+                            {this.renderPicker()}
                         </Modal>
                         : show &&
                         this.renderPicker()
