@@ -3,6 +3,8 @@ import { Button } from 'react-native'
 import { Input, Switch, PickerList, Picker, DateTimePicker } from '@react-native-istanbul/forms'
 import { Container, Header, Title, Content, Separator, Text } from 'native-base'
 
+const darkMode = true
+
 const cityItems = [
   {
     'key': 'Select City',
@@ -77,7 +79,6 @@ export default class App extends Component {
         <Container>
           <Content>
             <PickerList
-              type={'default'}
               headerTitle={'Select City'}
               value={city}
               separatorTitle={true}
@@ -92,7 +93,6 @@ export default class App extends Component {
               <Text>{''}</Text>
             </Separator>
             <PickerList
-              type={'default'}
               headerTitle={'Select City'}
               value={car}
               separatorTitle={false}
@@ -118,6 +118,7 @@ export default class App extends Component {
             <Picker
               label={'Gender'}
               cancelTitleIOS={'Close'}
+              darkMode={darkMode}
               doneTitleIOS={'Done'}
               onValueChange={(val) => {
                 this.setState({ gender: val })
@@ -128,6 +129,7 @@ export default class App extends Component {
 
             <DateTimePicker
               label={'Date'}
+              darkMode={darkMode}
               cancelTitleIOS={'Close'}
               doneTitleIOS={'Done'}
               dateFormat={'DD.MM.YYYY'}

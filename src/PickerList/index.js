@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Button, ListItem, Text, Icon, Left, Body, Right, Separator } from 'native-base';
+import { Text, Separator } from 'native-base';
 import ModalList from '../ModalList'
+import { InputItemText, InputItemBody } from '../InputItem'
 
 export default class PickerList extends Component {
     state = {
@@ -11,10 +12,10 @@ export default class PickerList extends Component {
     updateValue(value) {
         const { data } = this.props
         const item = data.find(x => x.value == value)
-        if(item){
+        if (item) {
             this.setState({ seletedItemText: item.key })
         }
-        else{
+        else {
             this.setState({ seletedItemText: '' })
         }
     }
@@ -33,7 +34,7 @@ export default class PickerList extends Component {
     render() {
         const { type, headerTitle, value, androidStatusBarColor, headerbackgroundColor, separatorTitle, iosBarStyle, onChange, data, label } = this.props
         return (
-            <React.Fragment>
+            <>
                 <ModalList
                     type={type}
                     headerTitle={headerTitle}
@@ -53,40 +54,21 @@ export default class PickerList extends Component {
                         <Text>{label}</Text>
                     </Separator>
                 }
-                <ListItem icon onPress={() => { this.setState({ showModal: true }) }}>
-                    {
-                        separatorTitle ?
-                            <React.Fragment>
-                                <Left >
-                                    <Button style={{ backgroundColor: "#007AFF", display: 'none' }}>
-                                        <Icon active name="wifi" />
-                                    </Button>
-                                </Left>
-                                <Body style={{ marginLeft: -18 }}>
-                                    <Text>{this.state.seletedItemText}</Text>
-                                </Body>
-                                <Right>
-                                    <Icon active name="arrow-forward" />
-                                </Right>
-                            </React.Fragment>
-                            :
-                            <React.Fragment>
-                                <Left >
-                                    <Button style={{ backgroundColor: "#007AFF", display: 'none' }}>
-                                        <Icon active name="wifi" />
-                                    </Button>
-                                </Left>
-                                <Body style={{ flex : 0.5,  marginLeft: -18 }}>
-                                    <Text>{label}</Text>
-                                </Body>
-                                <Right style={{flex : 0.5}}>
-                                    <Text numberOfLines={1}>{this.state.seletedItemText}</Text>
-                                    <Icon active name="arrow-forward" />
-                                </Right>
-                            </React.Fragment>
-                    }
-                </ListItem>
-            </React.Fragment>
+
+                {
+                    separatorTitle ?
+                        <InputItemBody
+                            onPress={() => { this.setState({ showModal: true }) }}
+                            seletedItemText={this.state.seletedItemText}
+                        />
+                        :
+                        <InputItemText
+                            label={label}
+                            onPress={() => { this.setState({ showModal: true }) }}
+                            seletedItemText={this.state.seletedItemText}
+                        />
+                }
+            </>
         )
     }
 }
