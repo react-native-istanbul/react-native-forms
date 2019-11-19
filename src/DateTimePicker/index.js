@@ -18,7 +18,7 @@ export default class DateTimePicker extends React.Component {
     }
 
     doneOnPress = () => {
-        const { selectedITem, } = this.state;
+        const { selectedITem } = this.state;
         this.props.onValueChange(selectedITem)
         this.setState({
             show: false,
@@ -31,7 +31,6 @@ export default class DateTimePicker extends React.Component {
     }
 
     setDate = (event, date) => {
-        const { selectedITem, } = this.state;
         this.setState({
             selectedITem: date,
             show: Platform.OS === 'ios' ? true : false,
@@ -50,33 +49,53 @@ export default class DateTimePicker extends React.Component {
     }
 
     componentDidMount() {
-        const { value } = this.props
+        const { value, placeHolder } = this.props
+        let dateValue = value;
+        let seletedItemText = placeHolder;
+        if (value == '' || value == undefined || value == null) {
+            dateValue = new Date();
+        }
+        else {
+            seletedItemText = this.getDate(dateValue);
+            dateValue = Moment(value, this.props.dateFormat).toDate();
+        }
         this.setState({
-            selectedITem: value,
-            seletedItemText: this.getDate(value)
+            selectedITem: dateValue,
+            seletedItemText: seletedItemText
         })
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         if (nextProps.value != this.props.value) {
-            this.setState({ seletedItemText: this.getDate(nextProps.value) })
+            let dateValue = nextProps.value;
+            let selectedItemText = '';
+            if (nextProps.value == '' || nextProps.value == undefined || nextProps.value == null) {
+                dateValue = new Date();
+                selectedItemText = this.props.placeHolder;
+                this.setState({ selectedITem: new Date() })
+            }
+            else {
+                selectedItemText = this.getDate(dateValue)
+                this.setState({ selectedITem: Moment(nextProps.value, this.props.dateFormat).toDate() })
+            }
+            this.setState({ seletedItemText: selectedItemText })
         }
         return true;
     }
 
     show() {
-        const { value } = this.props;
-        this.setState({ show: true, selectedITem: value })
+        this.setState({ show: true })
     }
 
     renderPicker = () => {
         const { selectedITem } = this.state;
-        const { minimumDate, maximumDate, androidDisplay } = this.props
+        const { minimumDate, maximumDate, androidDisplay, locale } = this.props
         return (
             <RNDateTimePicker
                 value={selectedITem}
                 mode={'date'}
                 minimumDate={minimumDate}
+                locale={locale}
                 maximumDate={maximumDate}
                 display={androidDisplay}
                 onChange={this.setDate}
@@ -85,15 +104,18 @@ export default class DateTimePicker extends React.Component {
     }
 
     render() {
-        const { doneTitleIOS, modalAnimationIOS, label, cancelTitleIOS, dateFormat, darkMode } = this.props;
+        const { doneTitleIOS, itemDisplay = true, modalAnimationIOS, label, cancelTitleIOS, dateFormat, darkMode } = this.props;
         const { show, seletedItemText } = this.state;
         return (
             <>
-                <InputItemText
-                    onPress={() => { this.show() }}
-                    label={label}
-                    seletedItemText={seletedItemText}
-                />
+                {
+                    itemDisplay &&
+                    <InputItemText
+                        onPress={() => { this.show() }}
+                        label={label}
+                        seletedItemText={seletedItemText}
+                    />
+                }
                 {
                     Platform.OS === 'ios' ?
                         <Modal

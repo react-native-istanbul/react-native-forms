@@ -9,9 +9,10 @@ export default function Input({ placeholder, success, error, value, keyboardType
             error={error}
             style={{ marginLeft: 10 }}>
             <TextInput
+                placeholderTextColor={'#8F8E95'}
                 value={value}
                 placeholder={placeholder}
-                style={{ height: 44, flex : 1,  marginRight: 10, fontSize: 17 }}
+                style={{ height: 44, flex: 1, marginRight: 10, fontSize: 17 }}
                 clearButtonMode={clearButtonMode}
                 onChangeText={onChangeText}
                 keyboardType={keyboardType}
