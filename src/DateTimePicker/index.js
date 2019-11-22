@@ -19,7 +19,7 @@ export default class DateTimePicker extends React.Component {
 
     doneOnPress = () => {
         const { selectedITem } = this.state;
-        this.props.onValueChange(selectedITem)
+        this.props.onValueChange(this.getDate(selectedITem))
         this.setState({
             show: false,
             seletedItemText: this.getDate(selectedITem)
@@ -36,10 +36,15 @@ export default class DateTimePicker extends React.Component {
             show: Platform.OS === 'ios' ? true : false,
         });
         if (Platform.OS === 'android') {
-            this.props.onValueChange(date)
-            this.setState({
-                seletedItemText: this.getDate(date)
-            })
+            if (event.type == 'dismissed') {
+                //dismissed
+            }
+            else {
+                this.props.onValueChange(this.getDate(date))
+                this.setState({
+                    seletedItemText: this.getDate(date)
+                })
+            }
         }
     }
 
@@ -65,26 +70,34 @@ export default class DateTimePicker extends React.Component {
         })
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    UNSAFE_componentWillReceiveProps(nextProps, nextState) {
         if (nextProps.value != this.props.value) {
-            let dateValue = nextProps.value;
-            let selectedItemText = '';
-            if (nextProps.value == '' || nextProps.value == undefined || nextProps.value == null) {
-                dateValue = new Date();
-                selectedItemText = this.props.placeHolder;
-                this.setState({ selectedITem: new Date() })
+            let selectedItemText = ''
+            let selectedItem = ''
+            if (nextProps.value) {
+                selectedItemText = this.getDate(nextProps.value);
+                selectedItem = Moment(nextProps.value, this.props.dateFormat).toDate()
             }
             else {
-                selectedItemText = this.getDate(dateValue)
-                this.setState({ selectedITem: Moment(nextProps.value, this.props.dateFormat).toDate() })
+                selectedItemText = this.props.placeHolder;
+                selectedItem = new Date();
             }
-            this.setState({ seletedItemText: selectedItemText })
+
+            this.setState({
+                seletedItemText: selectedItemText,
+                selectedITem: selectedItem
+            })
         }
-        return true;
     }
 
     show() {
-        this.setState({ show: true })
+        if (this.props.value != "") {
+            let selectedITem = Moment(this.props.value, this.props.dateFormat).toDate()
+            this.setState({ show: true, selectedITem: selectedITem })
+        }
+        else {
+            this.setState({ show: true, selectedITem: new Date() })
+        }
     }
 
     renderPicker = () => {
