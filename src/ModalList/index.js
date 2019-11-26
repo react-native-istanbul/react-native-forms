@@ -21,7 +21,7 @@ export default class ModalList extends React.Component {
                     transparent={false}
                     visible={show}
                     onRequestClose={() => {
-                        console.log('close')
+                        close(false)
                     }}>
                     <Header androidStatusBarColor={androidStatusBarColor} iosBarStyle={iosBarStyle} style={{ backgroundColor: headerbackgroundColor, }}>
                         <Left>
