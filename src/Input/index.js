@@ -7,7 +7,7 @@ export default function Input({ placeholder, success, error, value, keyboardType
         <Item
             success={success}
             error={error}
-            style={{ marginLeft: 10 }}>
+            style={{ paddingLeft: 10, backgroundColor : 'white' }}>
             <TextInput
                 placeholderTextColor={'#8F8E95'}
                 value={value}
