@@ -1,45 +1,51 @@
 import React from 'react'
-import { ListItem, Left, Body, Text, Right, Icon } from 'native-base'
+import { TouchableOpacity } from 'react-native'
+import { Item, LeftItem, RightItem, ItemLeftText, ItemRightText } from './styles'
 
 export function InputItem({ children, label }) {
     return (
-        <ListItem style={{ marginLeft: -4, backgroundColor: 'white' }} icon>
-            <Left />
-            <Body style={{ backgroundColor: 'white' }}>
-                <Text>{label}</Text>
-            </Body>
-            <Right>
+        <Item>
+            <LeftItem>
+                <ItemLeftText>
+                    {label}
+                </ItemLeftText>
+            </LeftItem>
+            <RightItem>
                 {children}
-            </Right>
-        </ListItem>
+            </RightItem>
+        </Item>
     )
 }
 
 export function InputItemText({ onPress, label, seletedItemText }) {
     return (
-        <ListItem style={{ marginLeft: -4, backgroundColor: 'white' }} icon onPress={onPress}>
-            <Left />
-            <Body style={{ flex: 0.5, backgroundColor: 'white' }}>
-                <Text>{label}</Text>
-            </Body>
-            <Right style={{ flex: 0.5, backgroundColor: 'white' }}>
-                <Text numberOfLines={1}>{seletedItemText}</Text>
-                <Icon active name="arrow-forward" />
-            </Right>
-        </ListItem>
+        <Item>
+            <LeftItem>
+                <ItemLeftText>
+                    {label}
+                </ItemLeftText>
+            </LeftItem>
+            <RightItem>
+                <TouchableOpacity
+                    onPress={onPress}
+                >
+                    <ItemRightText>
+                        {seletedItemText}
+                    </ItemRightText>
+                </TouchableOpacity>
+            </RightItem>
+        </Item>
     )
 }
 
 export function InputItemBody({ onPress, seletedItemText }) {
     return (
-        <ListItem style={{ marginLeft: -4, backgroundColor: 'white' }} icon onPress={onPress}>
-            <Left />
-            <Body style={{ backgroundColor: 'white' }}>
-                <Text>{seletedItemText}</Text>
-            </Body>
-            <Right style={{ backgroundColor: 'white' }}>
-                <Icon active name="arrow-forward" />
-            </Right>
-        </ListItem>
+        <Item>
+            <TouchableOpacity onPress={onPress} style={{ flex: 1, justifyContent: 'center' }}>
+                <ItemLeftText>
+                    {seletedItemText}
+                </ItemLeftText>
+            </TouchableOpacity>
+        </Item>
     )
 }

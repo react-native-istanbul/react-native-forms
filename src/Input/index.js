@@ -1,18 +1,15 @@
 import React from 'react'
-import { Item } from 'native-base'
-import { TextInput } from 'react-native'
+import { StyleSheet, } from 'react-native'
+import { Item, TextInput } from '../InputItem/styles'
 
-export default function Input({ placeholder, success, error, value, keyboardType, onChangeText, clearButtonMode, style }) {
+export default function Input({ placeholder, error, value, keyboardType, onChangeText, clearButtonMode }) {
     return (
         <Item
-            success={success}
-            error={error}
-            style={{ paddingLeft: 10, backgroundColor : 'white' }}>
+            style={error ? style.error : style.success}>
             <TextInput
                 placeholderTextColor={'#8F8E95'}
                 value={value}
                 placeholder={placeholder}
-                style={{ height: 44, flex: 1, marginRight: 10, fontSize: 17 }}
                 clearButtonMode={clearButtonMode}
                 onChangeText={onChangeText}
                 keyboardType={keyboardType}
@@ -20,3 +17,14 @@ export default function Input({ placeholder, success, error, value, keyboardType
         </Item>
     )
 }
+
+const style = StyleSheet.create({
+    error: {
+        borderBottomColor: 'red',
+        paddingLeft: 10
+    },
+    success: {
+        borderBottomColor: 'green',
+        paddingLeft: 10
+    }
+})
