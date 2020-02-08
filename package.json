@@ -33,7 +33,6 @@
   "dependencies": {
     "@react-native-community/datetimepicker": "^2.1.0",
     "moment": "^2.24.0",
-    "native-base": "^2.13.8",
     "react-native-picker-module": "^1.2.0",
     "react-native-vector-icons": "^6.6.0",
     "styled-components": "^5.0.1"
