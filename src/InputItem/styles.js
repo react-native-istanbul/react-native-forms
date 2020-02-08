@@ -43,3 +43,19 @@ flex: 1;
 marginRight: 10; 
 fontSize: ${textSize};
 `;
+
+export const ListItem = styled.TouchableHighlight`
+paddingTop : 10;
+paddingLeft : 10;
+borderBottomWidth: 0.5;
+height: 44;
+paddingBottom : 5;
+borderBottomColor: ${borderBottomColor};
+flexDirection: row;
+`;
+
+export const HeaderContainer = styled.SafeAreaView`
+flex: 1;
+flexDirection: row;
+maxHeight: 90;
+`;

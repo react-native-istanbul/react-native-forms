@@ -3,7 +3,7 @@ import { Button } from 'react-native'
 import { Input, Switch, PickerList, Picker, DateTimePicker } from '@react-native-istanbul/forms'
 import { Container, Header, Title, Content, Separator, Text } from 'native-base'
 
-const darkMode = true
+const darkMode = false
 
 const cityItems = [
   {
@@ -55,6 +55,7 @@ const state = {
   saveProfile: false,
   city: '',
   car: '',
+  nameValidationError: true,
   date: new Date(),
   gender: ''
 }
@@ -69,8 +70,13 @@ export default class App extends Component {
     this.setState(state);
   }
 
+  onChangeName(text) {
+    let error = text.length < 2;
+    this.setState({ name: text, nameValidationError: error })
+  }
+
   render() {
-    const { name, saveProfile, city, gender, car, date } = this.state
+    const { name, saveProfile, city, gender, car, date, nameValidationError } = this.state
     return (
       <>
         <Header>
@@ -78,6 +84,9 @@ export default class App extends Component {
         </Header>
         <Container>
           <Content>
+            <Separator>
+              <Text>{''}</Text>
+            </Separator>
             <PickerList
               headerTitle={'Select City'}
               value={city}
@@ -105,9 +114,9 @@ export default class App extends Component {
             />
             <Input
               placeholder={'Name'}
-              onChangeText={(text) => { this.setState({ name: text }) }}
+              onChangeText={(text) => { this.onChangeName(text) }}
               value={name}
-              success={true}
+              error={nameValidationError}
             />
             <Switch
               label={'Save Profile'}

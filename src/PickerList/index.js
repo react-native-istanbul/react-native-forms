@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Text, Separator } from 'native-base';
 import ModalList from '../ModalList'
 import { InputItemText, InputItemBody } from '../InputItem'
 
@@ -48,13 +47,6 @@ export default class PickerList extends Component {
                     data={data}
                     close={() => { this.setState({ showModal: false }) }}
                 />
-                {
-                    separatorTitle &&
-                    <Separator>
-                        <Text>{label}</Text>
-                    </Separator>
-                }
-
                 {
                     separatorTitle ?
                         <InputItemBody

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Text, View, Modal, FlatList } from 'react-native'
-import { Header, Left, Right, Body, Title, Button, ListItem, Icon } from 'native-base'
+import { Text, View, Modal, FlatList, StatusBar, TouchableOpacity } from 'react-native'
+import { ListItem, HeaderContainer } from '../InputItem/styles'
 
 export default class ModalList extends React.Component {
 
@@ -23,42 +23,41 @@ export default class ModalList extends React.Component {
                     onRequestClose={() => {
                         close(false)
                     }}>
-                    <Header androidStatusBarColor={androidStatusBarColor} iosBarStyle={iosBarStyle} style={{ backgroundColor: headerbackgroundColor, }}>
-                        <Left>
-                            <Button transparent
-                                onPress={() => {
-                                    close(false)
-                                }}
-                            >
-                                <Icon name='arrow-back'
-                                    style={{ color: 'white' }}
-                                />
-                            </Button>
-                        </Left>
-                        <Body>
-                            <Title style={{ color: 'white' }}>{headerTitle}</Title>
-                        </Body>
-                        <Right>
-                            <Button transparent />
-                        </Right>
-                    </Header>
+                    <StatusBar barStyle={iosBarStyle} />
+
+                    <HeaderContainer style={{ backgroundColor: headerbackgroundColor }}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                close(false)
+                            }}
+                            style={{ flex: 0.2, marginLeft: 15 }}>
+                            <Text style={{ color: '#ffffff', fontSize: 17 }}>Kapat</Text>
+                        </TouchableOpacity>
+                        <View style={{ flex: 0.6, alignItems: 'center' }}>
+                            <Text style={{ color: '#ffffff', alignContent: 'center', fontSize: 17 }}>{headerTitle}</Text>
+                        </View>
+
+                        <View style={{ flex: 0.2, alignItems: 'center', backgroundColor: headerbackgroundColor }}>
+
+                        </View>
+                    </HeaderContainer>
 
                     <FlatList
                         data={data}
                         renderItem={({ item }) => (
-                            <ListItem selected={item.value == value}
-                                key={item.value}
+                            <ListItem
+                                underlayColor={'#c8c7cc'}
                                 onPress={() => {
                                     onPress(item.value)
                                     close(false)
                                     valueText(item.key)
-                                }}>
-                                <Left>
-                                    <Text>{item.key}</Text>
-                                </Left>
-                                <Right>
-                                    <Icon name="md-checkmark" />
-                                </Right>
+                                }}
+                            >
+                                <Text
+                                    style={item.value == value ? { color: 'green', fontSize: 17 } : { color: 'black', fontSize: 17 }}
+                                >
+                                    {item.key}
+                                </Text>
                             </ListItem>
                         )}
                     />
