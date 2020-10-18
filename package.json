@@ -1,6 +1,6 @@
 {
   "name": "@react-native-istanbul/forms",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "react-native-istanbul",
   "main": "index.js",
   "files": [
@@ -31,8 +31,8 @@
   },
   "homepage": "https://github.com/react-native-istanbul/forms#readme",
   "dependencies": {
-    "native-base": "^2.13.8",
-    "react-native-vector-icons" : "^6.6.0",
+    "native-base": "^2.13.14",
+    "react-native-vector-icons": "^7.1.0",
     "moment": "^2.24.0",
     "@react-native-community/datetimepicker": "^2.1.0",
     "react-native-picker-module": "^1.2.0"
